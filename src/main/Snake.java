@@ -1,6 +1,5 @@
 package main;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class Snake {
             case DOWN -> Snake.head.setY(Snake.head.getY() + gp.playerSpeed);
             case LEFT -> Snake.head.setX(Snake.head.getX()- gp.playerSpeed);
             case RIGHT -> Snake.head.setX(Snake.head.getX() + gp.playerSpeed);
-            default -> {break;}
+
         }
 
 
