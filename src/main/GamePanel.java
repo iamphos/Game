@@ -23,9 +23,6 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
-    // set Player default position
-    int playerX = 0;
-    int playerY = 0;
     int playerSpeed = tileSize;
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -43,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        @SuppressWarnings("IntegerDivisionInFloatingPointContext") double drawInterval = 1000000000/FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
         while (gameThread != null){
 
@@ -62,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
                 if(remainingTime < 0) {
                     remainingTime = 0;
                 }
+                //noinspection BusyWait
                 Thread.sleep((long) remainingTime);
 
                 nextDrawTime += drawInterval;
@@ -103,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //Scoreboard
-        Font myFont2 = new Font("Roboto", 1, 20);
+        Font myFont2 = new Font("Roboto", Font.BOLD, 20);
         g2.setFont(myFont2);
         g2.setColor(Color.RED);
         g2.drawString("Score: " + Snake.score.getScore(), tileSize*12, tileSize/2);
@@ -125,15 +123,18 @@ public class GamePanel extends JPanel implements Runnable{
         g2.setColor(Color.GREEN);
         for(int i = 0; i < Snake.tails.size(); i++) {
             p = Snake.ptc(Snake.tails.get(i).getX(), Snake.tails.get(i).getY());
-            g2.fillRect(p.x,p.y, tileSize,tileSize);
-        }
 
+        }
+        g2.fillRect(p.x,p.y, tileSize,tileSize);
 
 
 
         //Head
         g2.setColor(Color.BLACK);
         g2.fillRect(Snake.head.getX(), Snake.head.getY(), tileSize, tileSize);
+
+
+
         g2.dispose();
 
 
